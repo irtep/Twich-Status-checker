@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+			<!-- Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+			<!-- Font Awesome-->
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+				<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<title>Wikipedia viewer by Amorcitos</title>
+
+		<style>
+
+			body {
+
+				background-color: black; 
+
+			}
+
+			#mainSection {
+
+				border: 10px solid blue;
+				border-radius: 15px;
+				text-align: center;
+				position: relative;
+				
+				top: 150px;
+				width: 700px;
+				height: 350px;
+				background-color: white;
+				background: linear-gradient(white, blue); /* Standard syntax (must be last) */
+				padding: 30px;
+
+				font-family: 'Permanent Marker', cursive;
+			}
+
+			.redFont {
+
+				color: red;
+
+			}
+
+			.greenFont {
+
+				color: green;
+
+			}
+
+
+		</style>
+
+	</head>
+
+	<body>
+
+		<div id="mainSection" class ="container-fluid">
+
+			<br><br><br><br>
+
+			<span id = "s1username"> <!-- Streamer 1 starts-->
+
+				Jampan Paja.
+
+			</span>	
+
+
+			<span id = "s1status">
+                
+                <a href="https://www.twitch.tv/jampanpaja">
+				<i id= "jamLogo" class= "fa fa-twitch"></i>
+
+			</span>
+
+
+			<span id = "s1streaming"> 
+
+				offline.
+                
+			</span></a>					<!-- Streamer 1 ends-->	
+
+			<br><br>
+
+			<span id = "s2username"> <!-- Streamer 2 starts-->
+
+				Free Code Camp.
+
+			</span>	
+
+
+			<span id = "s2status">
+                
+                <a href="https://www.twitch.tv/freecodecamp">
+				<i id= "fccLogo" class= "fa fa-twitch"></i>
+
+			</span>
+
+
+			<span id = "s2streaming"> 
+
+				offline.
+
+			</span></a>					<!-- Streamer 2 ends-->	
+	
+
+		</div> <!-- FLUID CONTAINER ENDS-->	
+
+	</body>
+
+	<script>
+
+
+		 $(document).ready(() => {
+             
+		 	const myClientID = "q3wth6qkxuwkbwvp0n5elwk0id4cxd";
+            const jampanPaja = "jampanpaja"
+		 	const freeCodeCamp = "freecodecamp";
+
+			  $.ajax({  // ajax jampanpaja
+
+			    url: "https://api.twitch.tv/kraken/streams/"+ jampanPaja + "?client_id=" + myClientID,
+			 
+			   dataType: "jsonp",
+
+			   success: function(response) { 
+			   
+			       console.log(response);
+
+			       if (response.stream === null) {
+
+			       		document.getElementById("jamLogo").classList.add("redFont");
+
+			       }  else { // if offline ends
+
+			       		document.getElementById("jamLogo").classList.add("greenFont");
+                       
+                       console.log("k1:",response.stream.channel.status);
+                       console.log("k2:",response._links.self);
+                       
+                       document.getElementById("s1streaming").innerHTML = response.stream.channel.status;
+
+			       }
+
+			 } 
+
+
+		 }); // ajax of jampaja ends
+
+
+			  $.ajax({   // ajax freecodecamp
+
+			    url: "https://api.twitch.tv/kraken/streams/"+ freeCodeCamp + "?client_id=" + myClientID,
+			 
+			   dataType: "jsonp",
+
+			   success: function(response) { 
+			   
+			       console.log(response);
+
+			       if (response.stream === null) {
+
+			       		document.getElementById("fccLogo").classList.add("redFont");
+
+			       }  else { // if offline ends
+
+			       		document.getElementById("fccLogo").classList.add("greenFont");
+                        
+                       console.log("k1:",response.stream.channel);
+			       }
+
+			 } 
+
+
+		 }); // ajax of free code camp ends
+
+
+}) // on load ends
+ 
+	</script>
+
+</html>
